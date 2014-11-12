@@ -153,7 +153,9 @@ Ball.prototype.update = function(paddle1, paddle2) {
     document.getElementById("playerScore").innerHTML = playerScore;
 
     if(playerScore > 11) {
-      alert("GAME OVER, YOU WON! READY FOR THE NEXT GAME?")
+      document.getElementById("gameover").innerHTML = "YOU WON! CLICK HERE TO PLAY AGAIN";
+      document.getElementById("gameover").style.visibility = "visible";
+      document.getElementById("gameover").style.cursor = "pointer";
       computerScore = 0;
       playerScore = 0;
       document.getElementById("computerScore").innerHTML = computerScore;
@@ -170,13 +172,15 @@ Ball.prototype.update = function(paddle1, paddle2) {
     document.getElementById("computerScore").innerHTML = computerScore;
 
     if(computerScore > 11) {
-      alert("GAME OVER, THE COMPUTER BEAT YOU! READY FOR THE NEXT GAME?");
+      document.getElementById("gameover").innerHTML = "YOU LOST! CLICK HERE TO PLAY AGAIN";
+      document.getElementById("gameover").style.visibility = "visible";
+      document.getElementById("gameover").style.cursor = "pointer";
       computerScore = 0;
       playerScore = 0;
       document.getElementById("computerScore").innerHTML = computerScore;
       document.getElementById("playerScore").innerHTML = playerScore;
-      player.paddle.x = 175;
-      player.paddle.y = 580;
+      this.x_speed = 0;
+      this.y_speed = 0;
     }
   }
 
