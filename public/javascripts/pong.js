@@ -158,12 +158,14 @@ Ball.prototype.update = function(paddle1, paddle2) {
     computerScore ++;
     document.getElementById("computerScore").innerHTML = computerScore;
 
-    if(computerScore > 1) {
+    if(computerScore > 11) {
       alert("GAME OVER, THE COMPUTER BEAT YOU! READY FOR THE NEXT GAME?");
       computerScore = 0;
       playerScore = 0;
       document.getElementById("computerScore").innerHTML = computerScore;
       document.getElementById("playerScore").innerHTML = playerScore;
+      player.paddle.x = 175;
+      player.paddle.y = 580;
     }
   }
 
