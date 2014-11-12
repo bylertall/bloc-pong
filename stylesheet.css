@@ -1,0 +1,57 @@
+body {
+  font-family: sans-serif;
+  background-color: #E04747;
+  width: 100%;
+  min-width: 565px;
+  overflow-x: hidden;
+}
+
+.header {
+  color: white;
+  font-weight: bold;
+  margin: 30px 0 0 30px;
+  text-align: center;
+  width: 20%;
+  min-width: 260px;
+  border: 10px solid white;
+}
+
+#canvasContainer {
+  width: 400px;
+  height: 600px;
+  margin: 0 auto;
+  border: 5px solid white;
+}
+
+.canvasBackground {
+  padding-top: 15px;
+  height: 700px;
+  margin: 0 auto;
+}
+
+#computerScore {
+  position: relative;
+  left: 170px;
+  bottom: 440px;
+  text-align: center;
+  color: white;
+  font-size: 25px;
+}
+
+#playerScore {
+  position: relative;
+  left: 170px;
+  bottom: 390px;
+  text-align: center;
+  color: white;
+  font-size: 25px;
+}
+
+.midfield {
+  height: 3px;
+  width: 400px;
+  margin: 0 auto;
+  background-color: #FFF;
+  position: relative;
+  top: 310px;
+}

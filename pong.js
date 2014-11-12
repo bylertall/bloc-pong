@@ -9,13 +9,15 @@ var height = 600;
 canvas.width = width;
 canvas.height = height;
 var context = canvas.getContext('2d');
+var computerScore = 0;
+var playerScore = 0;
 
 window.onload = function() {
-  document.body.appendChild(canvas);
+  document.getElementById("canvasContainer").appendChild(canvas);
   animate(step);
 };
 
-var step = function() {
+var step = function() { //will update/render paddles & ball, then use animate to call step again
   update();
   render();
   animate(step);
@@ -25,11 +27,6 @@ var update = function() {
   player.update();
   computer.update(ball);
   ball.update(player.paddle, computer.paddle);
-};
-
-var render = function() {
-  context.fillStyle = "#FF00FF";
-  context.fillRect(0, 0, width, height);
 };
 
 function Paddle(x, y, width, height) {
@@ -42,7 +39,7 @@ function Paddle(x, y, width, height) {
 }
 
 Paddle.prototype.render = function() {
-  context.fillStyle = "#0000FF";
+  context.fillStyle = "#FFF";
   context.fillRect(this.x, this.y, this.width, this.height);
 };
 
@@ -116,7 +113,7 @@ function Ball(x, y) {
 Ball.prototype.render = function() {
   context.beginPath();
   context.arc(this.x, this.y, this.radius, 2 * Math.PI, false);
-  context.fillStyle = "#000000";
+  context.fillStyle = "#FFF";
   context.fill();
 };
 
@@ -128,19 +125,46 @@ Ball.prototype.update = function(paddle1, paddle2) {
   var bottom_x = this.x + 5;
   var bottom_y = this.y + 5;
 
-  if(this.x - 5 < 0) {
+  if(this.x - 5 < 0) { //hitting left wall
     this.x = 5;
     this.x_speed = -this.x_speed;
-  } else if (this.x + 5 > 400) {
+  } else if (this.x + 5 > 400) { //hitting right wall
     this.x = 395;
     this.x_speed = -this.x_speed;
   }
 
-  if(this.y < 0 || this.y > 600) {
+  if(this.y < 0) { //player scores
     this.x_speed = 0;
     this.y_speed = 3;
     this.x = 200;
     this.y = 300;
+    playerScore ++;
+    document.getElementById("playerScore").innerHTML = playerScore;
+
+    if(playerScore > 11) {
+      alert("GAME OVER, YOU WON! READY FOR THE NEXT GAME?")
+      computerScore = 0;
+      playerScore = 0;
+      document.getElementById("computerScore").innerHTML = computerScore;
+      document.getElementById("playerScore").innerHTML = playerScore;
+    }
+  }
+
+  if(this.y > 600) { //computer scores
+    this.x_speed = 0;
+    this.y_speed = 3;
+    this.x = 200;
+    this.y = 300;
+    computerScore ++;
+    document.getElementById("computerScore").innerHTML = computerScore;
+
+    if(computerScore > 1) {
+      alert("GAME OVER, THE COMPUTER BEAT YOU! READY FOR THE NEXT GAME?");
+      computerScore = 0;
+      playerScore = 0;
+      document.getElementById("computerScore").innerHTML = computerScore;
+      document.getElementById("playerScore").innerHTML = playerScore;
+    }
   }
 
   if(top_y > 300) {
@@ -163,7 +187,7 @@ var computer = new Computer();
 var ball = new Ball(200, 300);
 
 var render = function() {
-  context.fillStyle = "#FF00FF";
+  context.fillStyle = "#18914A";
   context.fillRect(0, 0, width, height);
   player.render();
   computer.render();
