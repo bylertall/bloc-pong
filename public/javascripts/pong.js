@@ -11,10 +11,21 @@ canvas.height = height;
 var context = canvas.getContext('2d');
 var computerScore = 0;
 var playerScore = 0;
+var player = new Player();
+var computer = new Computer();
+var ball = new Ball(200, 300);
 
 window.onload = function() {
   document.getElementById("canvasContainer").appendChild(canvas);
   animate(step);
+};
+
+var render = function() {
+  context.fillStyle = "#18914A";
+  context.fillRect(0, 0, width, height);
+  player.render();
+  computer.render();
+  ball.render();
 };
 
 var step = function() { //will update/render paddles & ball, then use animate to call step again
@@ -38,11 +49,6 @@ function Paddle(x, y, width, height) {
   this.y_speed = 0;
 }
 
-Paddle.prototype.render = function() {
-  context.fillStyle = "#FFF";
-  context.fillRect(this.x, this.y, this.width, this.height);
-};
-
 function Player() {
   this.paddle = new Paddle(175, 580, 50, 10);
 }
@@ -51,11 +57,26 @@ function Computer() {
   this.paddle = new Paddle(175, 10, 50, 10);
 }
 
-Player.prototype.render = function() {
-  this.paddle.render();
+Paddle.prototype.render = function() {
+  context.fillStyle = "#FFF";
+  context.fillRect(this.x, this.y, this.width, this.height);
 };
 
-Computer.prototype.render = function() {
+Paddle.prototype.move = function(x, y) {
+  this.x += x;
+  this.y += y;
+  this.x_speed = x;
+  this.y_speed = y;
+  if(this.x < 0) {
+    this.x = 0;
+    this.x_speed = 0;
+  } else if (this.x + this.width > 400) {
+    this.x = 400 - this.width;
+    this.x_speed = 0;
+  }
+};
+
+Player.prototype.render = function() {
   this.paddle.render();
 };
 
@@ -72,6 +93,10 @@ Player.prototype.update = function() {
   }
 };
 
+Computer.prototype.render = function() {
+  this.paddle.render();
+};
+
 Computer.prototype.update = function(ball) {
   var x_pos = ball.x;
   var diff = -((this.paddle.x + (this.paddle.width / 2)) - x_pos);
@@ -85,20 +110,6 @@ Computer.prototype.update = function(ball) {
     this.paddle.x = 0;
   } else if(this.paddle.x + this.paddle.width > 400) {
     this.paddle.x = 400 - this.paddle.width;
-  }
-};
-
-Paddle.prototype.move = function(x, y) {
-  this.x += x;
-  this.y += y;
-  this.x_speed = x;
-  this.y_speed = y;
-  if(this.x < 0) {
-    this.x = 0;
-    this.x_speed = 0;
-  } else if (this.x + this.width > 400) {
-    this.x = 400 - this.width;
-    this.x_speed = 0;
   }
 };
 
@@ -182,18 +193,6 @@ Ball.prototype.update = function(paddle1, paddle2) {
       this.y += this.y_speed;
     }
   }
-};
-
-var player = new Player();
-var computer = new Computer();
-var ball = new Ball(200, 300);
-
-var render = function() {
-  context.fillStyle = "#18914A";
-  context.fillRect(0, 0, width, height);
-  player.render();
-  computer.render();
-  ball.render();
 };
 
 var keysDown = {};
