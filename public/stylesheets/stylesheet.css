@@ -1,9 +1,12 @@
+html {
+  overflow: hidden;
+}
+
 body {
   font-family: sans-serif;
   background-color: #E04747;
   width: 100%;
   min-width: 565px;
-  overflow-x: hidden;
 }
 
 .header {
